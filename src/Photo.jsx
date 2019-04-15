@@ -14,7 +14,7 @@ class Photo extends PureComponent {
   componentDidMount() {
     const { match } = this.props;
     const customerKey = process.env.REACT_APP_API_KEY;
-    const apiUrl = `https://api.500px.com/v1/photos/${match.params.photoId}?consumer_key=${customerKey}`;
+    const apiUrl = `https://api.500px.com/v1/photos/${match.params.photoId}?consumer_key=${customerKey}&image_size=4`;
     fetch(apiUrl)
       .then(res => res.json())
       .then(
@@ -46,11 +46,21 @@ class Photo extends PureComponent {
         {photo &&
         <div>
           <div className="title">{photo.name}</div>
-          <img src={photo.image_url} alt="not found"></img>
-          <div dangerouslySetInnerHTML={this.createDes(photo.description)} />
+          <div className="main">
+            <img src={photo.image_url} alt="not found"></img>
+            <div className="info">
+              <div className="user">
+                {photo.user.fullname}
+              </div>
+              <div className="description">
+                <p dangerouslySetInnerHTML={this.createDes(photo.description)} />
+              </div>
+              <div className="rating">Rating: {photo.rating}</div>
+              <button onClick={this.goBack}>Back</button>
+            </div>
+          </div>
         </div>
-        } 
-        <button onClick={this.goBack}>Back</button>
+        }
       </div>
     );
   }
