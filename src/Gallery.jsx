@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom'
 import './Gallery.css';
 
@@ -19,7 +20,7 @@ class Gallery extends PureComponent {
       photos: [],
       totalPages: null,
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
     this.callApi = this.callApi.bind(this);
   }
 
@@ -58,23 +59,9 @@ class Gallery extends PureComponent {
     this.callApi();
   }
 
-  handleClick(event) {
+  handlePageClick(page) {
     this.setState({
-      currentPage: Number(event.target.id)
-    });
-  }
-
-  renderPageNumbers() {
-    const pageNumbers = [1, 2, 3];
-    return pageNumbers.map(number => {
-      return (
-        <li key={number}>
-          <button
-            id={number}
-            onClick={this.handleClick}
-          >{number}</button>
-        </li>
-      );
+      currentPage: page.selected + 1
     });
   }
 
@@ -91,9 +78,16 @@ class Gallery extends PureComponent {
             />
           )}
         </ul>
-        <ul className="pagination">
-          {this.renderPageNumbers()}
-        </ul>
+        {this.state.totalPages && <ReactPaginate 
+          previousLabel="<"
+          nextLabel=">"
+          pageCount={this.state.totalPages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName="pagination"
+          activeClassName="active"
+        />}
       </div>
     );
   }

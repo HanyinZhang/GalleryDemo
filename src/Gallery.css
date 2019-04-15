@@ -1,6 +1,20 @@
+.active {
+  color: blue;
+}
+
 .pagination {
+  background-color: #fafafa;
   display: flex;
+  float: right;
+  font-weight: 500;
+  font-size: 18px;
   list-style: none;
+  padding: 5px;
+}
+.pagination > li {
+  padding: 0 5px;
+  user-select: none;
+  cursor: pointer;
 }
 
 .photo {
