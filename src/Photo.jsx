@@ -34,13 +34,17 @@ class Photo extends PureComponent {
 
   render() {
     const { photo } = this.props;
+    let image_url = '';
+    if(photo) {
+      image_url = typeof photo.image_url === "string"? photo.image_url: photo.image_url[1];
+    }
     return (
       <div>
         {photo &&
         <div>
           <div className="title">{photo.name}</div>
           <div className="main">
-            <img src={photo.image_url[1]} alt="not found"></img>
+            <img src={image_url} alt="not found"></img>
             <div className="info">
               <div className="user">
                 {photo.user.fullname}
