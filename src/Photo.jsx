@@ -1,37 +1,30 @@
+import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+
+import { fetchPhoto } from './actions';
+
 import './Photo.css';
 
 class Photo extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      photo: null,
-      error: null
-    };
     this.goBack = this.goBack.bind(this);
   }
 
+  static propTypes = {
+    onFetchPhoto: PropTypes.func,
+    photo: PropTypes.object,
+  };
+
   componentDidMount() {
-    const { match } = this.props;
-    const customerKey = process.env.REACT_APP_API_KEY;
-    const apiUrl = `https://api.500px.com/v1/photos/${match.params.photoId}?consumer_key=${customerKey}&image_size=4`;
-    fetch(apiUrl)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            photo: result.photo
-          });
-        },
-        (error) => {
-          this.setState({
-            error
-          });
-        }
-      )
+    const { match, photo } = this.props;
+    if(!photo) {
+      this.props.onFetchPhoto(match.params.photoId);
+    }
   }
 
-  goBack(e){
+  goBack(){
     this.props.history.push("/");
   }
 
@@ -40,14 +33,14 @@ class Photo extends PureComponent {
   }
 
   render() {
-    const { photo } = this.state;
+    const { photo } = this.props;
     return (
       <div>
         {photo &&
         <div>
           <div className="title">{photo.name}</div>
           <div className="main">
-            <img src={photo.image_url} alt="not found"></img>
+            <img src={photo.image_url[1]} alt="not found"></img>
             <div className="info">
               <div className="user">
                 {photo.user.fullname}
@@ -66,4 +59,18 @@ class Photo extends PureComponent {
   }
 }
 
-export default Photo;
+const mapStateToProps = state => {
+  return {
+    photo: state.gallery.photoDetail
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchPhoto: id=> {
+      dispatch(fetchPhoto(id))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Photo);

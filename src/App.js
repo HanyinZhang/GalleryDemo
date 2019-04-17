@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom'
-import './App.css';
-import Gallery from './Gallery';
+import { Switch, Route, withRouter } from 'react-router-dom';
+
+import Gallery from './Gallery.jsx';
 import Photo from './Photo';
+
+import './App.css';
 
 class App extends Component {
   render() {
@@ -10,8 +12,8 @@ class App extends Component {
       <div className="App">
         <main>
           <Switch>
-            <Route exact path='/' component={Gallery}/>
-            <Route path='/photo/:photoId' component={Photo}/>
+            <Route exact path='/' render={props => <Gallery {...props} />}/>
+            <Route path='/photo/:photoId' render={props => <Photo {...props} />}/>
           </Switch>
         </main>
       </div>
