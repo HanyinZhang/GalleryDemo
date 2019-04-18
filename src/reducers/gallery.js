@@ -16,6 +16,7 @@ const gallery = (state = initialState, action) => {
       };
     case RECEIVE_GALLERY:
       return {
+        ...state,
         currentPage: action.payLoad.current_page,
         photos: action.payLoad.photos,
         totalPages: action.payLoad.total_pages

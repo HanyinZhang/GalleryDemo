@@ -13,7 +13,7 @@ The API key has been set as an environment variable. In dev, it is included in `
 
 ## Third party libraries
 
-`Redux` is included to store states of the app. `Thunk` is chosen to separate api call from UI component. `react-paginate` is used to fulfill the pagination.  
+`Redux` is included to store states of the app. `Thunk` is chosen to separate api call from UI component. `react-paginate` is used to fulfill the pagination. `enzyme` is used for unit tests.
 
 ## Photo size
 
