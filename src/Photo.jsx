@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-
-import { fetchPhoto } from './actions';
 
 import './Photo.css';
 
@@ -63,18 +60,4 @@ class Photo extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    photo: state.gallery.photoDetail
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onFetchPhoto: id=> {
-      dispatch(fetchPhoto(id))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Photo);
+export default Photo;

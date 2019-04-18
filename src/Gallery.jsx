@@ -1,14 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import ReactPaginate from 'react-paginate';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-import { fetchGallery, pageClick, photoClick } from './actions';
 
 import './Gallery.css';
 
-const ListItem = ({ id, index, image_url, onClick }) => (
+export const ListItem = ({ id, index, image_url, onClick }) => (
   <li className="photo" onClick={()=>onClick(index)}>
     <Link to={`/photo/${id}`}>
       <img src={image_url} alt="Not Found" />
@@ -87,29 +84,4 @@ class Gallery extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    currentPage: state.gallery.currentPage,
-    photos: state.gallery.photos,
-    totalPages: state.gallery.totalPages
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onFetchGallery: page=> {
-      dispatch(fetchGallery(page))
-    },
-    onPageClick: page => {
-      dispatch(pageClick(page))
-    },
-    onPhotoClick: index => {
-      dispatch(photoClick(index))
-    }
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Gallery);
+export default Gallery;
